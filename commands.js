@@ -19,18 +19,9 @@ function createCommandChoices() {
 
 // Simple test command
 const TEST_COMMAND = {
-  name: 'schedulematch',
+  name: 'test',
   description: 'Add match to the #match-schedule channel',
-  type: 1,
-  options:[
-    {
-      type: 3,
-      name: 'object',
-      description: 'Pick your object',
-      required: true,
-      choices: createCommandChoices(),
-    },
-  ],
+  type: 1
 };
 
 const ALL_COMMANDS = [TEST_COMMAND];
