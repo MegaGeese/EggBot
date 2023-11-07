@@ -39,17 +39,26 @@ app.post('/interactions', async function (req, res) {
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
     const { name } = data;
-    console.log(req.body)
     // "test" command
     if (name === 'schedulematch') {
-      console.log(data.options)
+      console.log(res)
       // Send a message into the channel where command was triggered from
       return res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          // Fetches a random emoji to send from a helper function
-          content: 'hello world ' + getRandomEmoji(),
-        },
+        "title": "My Cool Modal",
+        "custom_id": "cool_modal",
+        "components": [{
+          "type": 1,
+          "components": [{
+            "type": 4,
+            "custom_id": "name",
+            "label": "Name",
+            "style": 1,
+            "min_length": 1,
+            "max_length": 4000,
+            "placeholder": "John",
+            "required": true
+          }]
+        }]
       });
     }
   }
