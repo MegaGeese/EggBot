@@ -3,7 +3,7 @@ import { capitalize, InstallGlobalCommands } from './utils.js';
 
 // Simple test command
 const TEST_COMMAND = {
-  name: 'scheduleMatch',
+  name: 'schedulematch',
   description: 'Add match to the #match-schedule channel',
   type: 1,
 };

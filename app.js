@@ -39,9 +39,10 @@ app.post('/interactions', async function (req, res) {
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
     const { name } = data;
-    console.log(name)
+    console.log(req.body)
     // "test" command
-    if (name === 'test') {
+    if (name === 'schedulematch') {
+      console.log(data.options)
       // Send a message into the channel where command was triggered from
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
