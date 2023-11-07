@@ -21,7 +21,7 @@ function createCommandChoices() {
 const TEST_COMMAND = {
   name: 'test',
   description: 'Basic command',
-  type: 1,
+  type: 2,
 };
 
 // Command containing options

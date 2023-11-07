@@ -56,4 +56,5 @@ app.post('/interactions', async function (req, res) {
 
 app.listen(PORT, () => {
   console.log('Listening on port', PORT);
+  console.log("/applications/1171509846269493288/commands")
 });
