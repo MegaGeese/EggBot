@@ -1,4 +1,3 @@
-import "dotenv/config";
 import express from "express";
 import {
   InteractionType,
@@ -9,27 +8,26 @@ import {
 } from "discord-interactions";
 import {
   VerifyDiscordRequest,
-  getRandomEmoji,
   DiscordRequest,
 } from "./utils.js";
-import { Events, ModalBuilder } from "discord.js";
 import fetch from "node-fetch";
+import secrets from "./secrets.json" assert { type: "json" }
 
 // Create an express app
 const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
 // Parse request body and verifies incoming requests using discord-interactions package
-app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
+app.use(express.json({ verify: VerifyDiscordRequest(secrets.PUBLIC_KEY) }));
 
-// Store for in-progress games. In production, you'd want to use a DB
-const activeGames = {};
+app.get('/', (req, res) => res.send('Hello World'));
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
  */
 app.post("/interactions", async function (req, res) {
   // Interaction type and data
+  console.log('interactions');
   const { type, id, data } = req.body;
 
   /**
@@ -87,7 +85,7 @@ app.post("/interactions", async function (req, res) {
       const matchID = matchPage.split("/room/")[1];
       fetch("https://open.faceit.com/data/v4/matches/" + matchID, {
         headers: {
-          Authorization: `Bearer ${process.env.FACEIT_CLIENT}`,
+          Authorization: `Bearer ${secrets.FACEIT_CLIENT}`,
         },
       })
         .then(function (response) {
@@ -105,7 +103,7 @@ app.post("/interactions", async function (req, res) {
           const team1 = template.teams.faction1;
           const team2 = template.teams.faction2;
           const tournament = template.competition_name;
-          DiscordRequest(`channels/${process.env.MATCH_SCHEDULE_CHANNEL_ID}/messages`, {
+          DiscordRequest(`channels/${secrets.MATCH_SCHEDULE_CHANNEL_ID}/messages`, {
             method: "POST",
             body: {
               content: `${team1.name} vs ${team2.name}\n${tournament}\nScheduled for <t:${template.scheduled_at}:f>\n[Match Page](<${matchPage}>)\n`,
