@@ -20,6 +20,7 @@ import {
 } from "./utils.js";
 import fetch from "node-fetch";
 import secrets from "./secrets.json" assert { type: "json" }
+import path from "path"
 
 // Create an express app
 const app = express();
@@ -57,6 +58,8 @@ app.post("/interactions", async function (req, res) {
     if(custom_id == "faceit_stats") faceitStatsSearch(components, res);
   }
 });
+
+app.use(express.static("public"));
 
 app.listen(PORT, () => {
   console.log("Listening on port", PORT);

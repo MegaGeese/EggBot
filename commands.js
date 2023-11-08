@@ -9,12 +9,18 @@ const MATCH_SCHEDULER = {
   type: 1,
 };
 
+const PLAYER_SEARCH = {
+  name: 'faceit_stats',
+  description: 'Display a user\'s stats',
+  type: 1,
+};
+
 const PING = {
   name: 'ping',
   description: "Responds with 'Pong'",
   type: 1
 }
 
-const ALL_COMMANDS = [PING, MATCH_SCHEDULER];
+const ALL_COMMANDS = [PING, MATCH_SCHEDULER, PLAYER_SEARCH];
 
 InstallGlobalCommands(secrets.APP_ID, ALL_COMMANDS);
