@@ -1,7 +1,7 @@
 {
-  "name": "getting-started",
+  "name": "egg-bot",
   "version": "1.0.0",
-  "description": "Discord example app",
+  "description": "Goose's Bot for Disocrd :3",
   "main": "app.js",
   "type": "module",
   "engines": {
@@ -12,8 +12,7 @@
     "register": "node commands.js",
     "dev": "nodemon app.js"
   },
-  "author": "Shay DeWael",
-  "license": "MIT",
+  "author": "August White",
   "dependencies": {
     "discord-interactions": "^3.2.0",
     "dotenv": "^16.0.3",
