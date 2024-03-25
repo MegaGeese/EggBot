@@ -7,7 +7,6 @@ import {
 } from "discord-interactions";
 
 export function faceitStatsModal(req, res) {
-  
   // Send a message into the channel where command was triggered from
   const userId = req.body.member.user.id;
   const guildId = req.body.channel.guild_id
@@ -70,33 +69,60 @@ export function faceitStatsModal(req, res) {
 }
 
 export function scheduleMatchModal(req, res) {
-  // Send a message into the channel where command was triggered from
-  const userId = req.body.member.user.id;
-  const guildId = req.body.channel.guild_id
-  console.log(guildId)
+// Send a message into the channel where command was triggered from
+const userId = req.body.member.user.id;
+const guildId = req.body.channel.guild_id
+console.log(guildId)
 
-  return res.send({
-    type: InteractionResponseType.MODAL,
-    data: {
-      title: "Submit Match Page",
-      custom_id: "schedule_match",
-      components: [
-        {
-          type: 1,
-          components: [
-            {
-              type: 4,
-              custom_id: "name",
-              label: "Name",
-              style: 1,
-              min_length: 1,
-              max_length: 4000,
-              placeholder: "https://www.faceit.com",
-              required: true,
-            },
-          ],
-        },
-      ],
-    },
-  });
+return res.send({
+  type: InteractionResponseType.MODAL,
+  data: {
+    title: "Submit Match Page",
+    custom_id: "schedule_match",
+    components: [
+      {
+        type: 1,
+        components: [
+          {
+            type: 4,
+            custom_id: "name",
+            label: "Name",
+            style: 1,
+            min_length: 1,
+            max_length: 4000,
+            placeholder: "https://www.faceit.com",
+            required: true,
+          },
+        ],
+      },
+    ],
+  },
+});
+}
+
+export function addTeamAsPrimary(req, res) {
+return res.send({
+  type: InteractionResponseType.MODAL,
+  data: {
+    title: "Add Primary Team for Scheduling Page",
+    custom_id: "add_team",
+    components: [
+      {
+        type: 1,
+        components: [
+          {
+            type: 4,
+            custom_id: "name",
+            label: "Name",
+            style: 1,
+            min_length: 1,
+            max_length: 4000,
+            placeholder: "Totsugeki",
+            required: true,
+          },
+        ],
+      },
+    ],
+  },
+});
 }

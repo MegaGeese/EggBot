@@ -8,11 +8,14 @@ import {
 } from "discord-interactions";
 import {
   scheduleMatch,
-  faceitStatsSearch
+  faceitStatsSearch,
+  updateMatch,
+  updateAllMatches,
 } from './interactions.js'
 import {
     faceitStatsModal,
-    scheduleMatchModal
+    scheduleMatchModal,
+    addTeamAsPrimary
 } from './modals.js'
 import {
   VerifyDiscordRequest,
@@ -21,6 +24,7 @@ import {
 import fetch from "node-fetch";
 import secrets from "./secrets.json" assert { type: "json" }
 import path from "path"
+import fs from 'fs/promises'
 
 // Create an express app
 const app = express();
@@ -34,8 +38,8 @@ app.use(express.json({ verify: VerifyDiscordRequest(secrets.PUBLIC_KEY) }));
 // Interactions endpoint URL where Discord will send HTTP requests
 app.post("/interactions", async function (req, res) {
   // Interaction type and data
-  console.log('interactions');
   const { type, id, data } = req.body;
+  console.log('interactions', type, id);
 
   //Handle verification requests
   if (type === InteractionType.PING) {
@@ -47,6 +51,9 @@ app.post("/interactions", async function (req, res) {
     const { name } = data;
     if (name === "schedule_match") scheduleMatchModal(req, res)
     if (name === "faceit_stats") faceitStatsModal(req, res)
+    if (name === "add_team") addTeamAsPrimary(req, res)
+    if (name == "update_match") updateMatch(data, res);
+    if (name == "update_all_matches") updateAllMatches(req, res);
   }
 
   // Handle Modal Submissions
@@ -56,8 +63,22 @@ app.post("/interactions", async function (req, res) {
 
     if(custom_id == "schedule_match") scheduleMatch(components, res);
     if(custom_id == "faceit_stats") faceitStatsSearch(components, res);
+    if(custom_id == "add_team") {
+      const newTeamName = components[0].components[0].value;
+      let teams = secrets.TEAMS || [];
+      if(!teams.includes(newTeamName)){
+        teams.push(newTeamName);
+        let obj = secrets;
+        obj.TEAMS = teams
+        let json = JSON.stringify(obj); //convert it back to json
+        fs.writeFile('./secrets.json', json); // write it back 
+      }
+      return res.send({type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE});
+    }
   }
 });
+
+
 
 app.use(express.static("public"));
 

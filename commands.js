@@ -3,24 +3,40 @@ import { InstallGlobalCommands } from './utils.js';
 import secrets from "./secrets.json" assert {'type': 'json'}
 
 // Simple test command
-const MATCH_SCHEDULER = {
+const ALL_COMMANDS = [
+{
   name: 'schedule_match',
   description: 'Schedules a faceit match by URL',
   type: 1,
-};
+},
 
-const PLAYER_SEARCH = {
+{
+  name: 'update_match',
+  type: 3
+},
+
+{
+  name: 'update_all_matches',
+  description: 'Update all matches in #match-schedule',
+  type: 1
+},
+
+{
   name: 'faceit_stats',
   description: 'Display a user\'s stats',
   type: 1,
-};
+},
 
-const PING = {
+{
+  name: 'add_team',
+  description: "Add a team to the list",
+  type: 1
+},
+
+{
   name: 'ping',
   description: "Responds with 'Pong'",
   type: 1
-}
-
-const ALL_COMMANDS = [PING, MATCH_SCHEDULER, PLAYER_SEARCH];
+}]
 
 InstallGlobalCommands(secrets.APP_ID, ALL_COMMANDS);
