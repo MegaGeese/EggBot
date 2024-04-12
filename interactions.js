@@ -136,11 +136,10 @@ export async function faceitStatsSearch(components, res){
       stats.Kills += parseInt(item.stats.Kills);
       stats.Deaths += parseInt(item.stats.Deaths);
       stats.HeadshotPercent += parseInt(item.stats.Headshots);
-      stats.KDR += parseFloat(item.stats["K/D Ratio"]);
       stats.Wins += parseInt(item.stats.Result);
     }
     stats.HeadshotPercent /= stats.Kills;
-    stats.KDR = stats.KDR / statsSearchJson.items.length;
+    stats.KDR = stats.Kills / stats.Deaths;
     stats.WinRate = stats.Wins / statsSearchJson.items.length;
     return res.send({
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
